@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  theos:
+    build:
+      context: .
+    volumes:
+      - ./theos:/home/me/theos
+      - ./sdks:/home/me/theos/sdks
+      - work:/home/me/work
+    privileged: true
+    network_mode: host
+volumes:
+  work:

@@ -1,0 +1,6 @@
+[submodule "theos"]
+	path = theos
+	url = https://github.com/theos/theos.git
+[submodule "sdks"]
+	path = sdks
+	url = https://github.com/theos/sdks.git
