@@ -9,5 +9,8 @@ services:
       - work:/home/me/work
     privileged: true
     network_mode: host
+    container_name: theos
+    stdin_open: true
+    tty: true
 volumes:
   work:
