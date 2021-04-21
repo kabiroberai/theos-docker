@@ -1,0 +1,11 @@
+#!/bin/bash
+
+sudo mount --bind ~/toolchain ~/theos/toolchain
+
+cp -an /container_init_template ~/work/container_init
+if mkdir ~/.container_init_done 2>/dev/null; then
+    # perform initial container init
+    ~/work/container_init
+fi
+
+cd ~/work && bash -l || :

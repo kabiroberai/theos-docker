@@ -1,8 +1,5 @@
 FROM ubuntu:20.04
 
-RUN useradd -ms /bin/bash me
-WORKDIR /home/me
-
 RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
     && apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -34,19 +31,23 @@ RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
+RUN adduser --disabled-password --gecos '' me \
+    && usermod -aG sudo me \
+    && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+WORKDIR /home/me
+USER me
+
 ADD --chown=me:me \
     https://github.com/kabiroberai/swift-toolchain-linux/releases/download/v2.0.0/swift-5.3.2-ubuntu20.04.tar.xz \
     toolchain.tar.xz
-
-USER me
-
 RUN mkdir -p theos/sdks toolchain work \
     && tar axvf toolchain.tar.xz -C toolchain \
     && rm toolchain.tar.xz
 
-USER root
-
-COPY entry.sh /entry
-RUN chmod +x /entry
+COPY --chown=me:me container_init_template entry /
+RUN chmod +x /container_init_template /entry \
+    && echo '. ~/.profile' > .bash_profile \
+    && echo 'export THEOS=~/theos' >> .bash_profile \
+    && echo 'export PATH="${THEOS}/bin:${THEOS}/toolchain/linux/host/bin:${PATH}"' >> .bash_profile
 
 ENTRYPOINT [ "/entry" ]

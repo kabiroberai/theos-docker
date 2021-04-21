@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# This file is executed when a newly created container
+# is started. Use it to perform initial container setup
+# actions, such as configuring dotfiles.
+
+sudo apt-get update
+
+# echo '. ~/work/.bash_profile' >> ~/.bash_profile
+# ln -s ~/work/.nicrc ~/.nicrc
+# ln -s ~/work/.theosrc ~/.theosrc
+# ln -s ~/work/.ssh ~/.ssh
