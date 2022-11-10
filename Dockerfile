@@ -40,7 +40,7 @@ WORKDIR /home/me
 USER me
 
 RUN mkdir -p theos/sdks toolchain work \
-    && curl -#L https://github.com/kabiroberai/swift-toolchain-linux/releases/download/v2.1.0/swift-5.6.1-ubuntu20.04$([ "$(uname -m)" = aarch64 ] && echo -aarch64).tar.xz \
+    && curl -#L https://github.com/kabiroberai/swift-toolchain-linux/releases/download/v2.2.1/swift-5.7-ubuntu20.04$([ "$(uname -m)" = aarch64 ] && echo -aarch64).tar.xz \
     | tar xvJ -C toolchain
 
 COPY --chown=me:me container_init_template entry /
